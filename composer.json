@@ -56,16 +56,16 @@
         "captainhook": {
             "force-install": true
         },
-        "ramsey/conventional-commits": {
-            "configFile": "conventional-commits.json"
-        },
         "chiron/devtools": {
             "command-prefix": "dev"
+        },
+        "ramsey/conventional-commits": {
+            "configFile": "conventional-commits.json"
         }
     },
     "scripts": {
         "post-root-package-install": "git init",
-        "post-create-project-cmd": "Chiron\\Dev\\LibraryStarterKit\\Wizard::start",
+        "post-create-project-cmd": "@starter-kit",
         "starter-kit": "Chiron\\Dev\\LibraryStarterKit\\Wizard::start"
     },
     "scripts-descriptions": {
