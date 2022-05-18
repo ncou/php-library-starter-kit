@@ -1,0 +1,94 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Chiron\Test\Dev\LibraryStarterKit\Task;
+
+use Mockery\MockInterface;
+use Chiron\Dev\LibraryStarterKit\Setup;
+use Chiron\Dev\LibraryStarterKit\Task\Build;
+use Chiron\Dev\LibraryStarterKit\Task\Builder;
+use Chiron\Test\Dev\LibraryStarterKit\TestCase;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+class BuildTest extends TestCase
+{
+    public function testGetAnswers(): void
+    {
+        /** @var Setup & MockInterface $setup */
+        $setup = $this->mockery(Setup::class);
+
+        /** @var SymfonyStyle & MockInterface $console */
+        $console = $this->mockery(SymfonyStyle::class);
+
+        $build = new Build($setup, $console, $this->answers);
+
+        $this->assertSame($this->answers, $build->getAnswers());
+    }
+
+    public function testGetSetup(): void
+    {
+        /** @var Setup & MockInterface $setup */
+        $setup = $this->mockery(Setup::class);
+
+        /** @var SymfonyStyle & MockInterface $console */
+        $console = $this->mockery(SymfonyStyle::class);
+
+        $build = new Build($setup, $console, $this->answers);
+
+        $this->assertSame($setup, $build->getSetup());
+    }
+
+    public function testGetConsole(): void
+    {
+        /** @var Setup & MockInterface $setup */
+        $setup = $this->mockery(Setup::class);
+
+        /** @var SymfonyStyle & MockInterface $console */
+        $console = $this->mockery(SymfonyStyle::class);
+
+        $build = new Build($setup, $console, $this->answers);
+
+        $this->assertSame($console, $build->getConsole());
+    }
+
+    public function testGetBuilders(): void
+    {
+        /** @var Setup & MockInterface $setup */
+        $setup = $this->mockery(Setup::class);
+
+        /** @var SymfonyStyle & MockInterface $console */
+        $console = $this->mockery(SymfonyStyle::class);
+
+        $build = new Build($setup, $console, $this->answers);
+
+        $builders = $build->getBuilders();
+
+        $this->assertContainsOnlyInstancesOf(Builder::class, $builders);
+        $this->assertCount(16, $builders);
+    }
+
+    public function testRun(): void
+    {
+        $builder1 = $this->mockery(Builder::class);
+        $builder1->expects()->build();
+
+        $builder2 = $this->mockery(Builder::class);
+        $builder2->expects()->build();
+
+        $builder3 = $this->mockery(Builder::class);
+        $builder3->expects()->build();
+
+        $build = $this->mockery(Build::class, [
+            'getBuilders' => [
+                $builder1,
+                $builder2,
+                $builder3,
+            ],
+        ]);
+
+        $build->shouldReceive('run')->passthru();
+
+        $build->run();
+    }
+}

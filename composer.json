@@ -1,0 +1,74 @@
+{
+    "name": "chiron/php-library-starter-kit",
+    "description": "A starter kit for quickly setting up a new PHP library package.",
+    "license": "MIT",
+    "type": "project",
+    "keywords": [
+        "builder",
+        "library",
+        "package",
+        "skeleton",
+        "template"
+    ],
+    "require": {
+        "php": "^8.0 || ^8.1",
+        "ext-json": "*",
+        "mockery/mockery": "^1.4.4",
+        "symfony/console": "^5.2.4",
+        "symfony/filesystem": "^5.1",
+        "symfony/finder": "^5.3.7",
+        "symfony/process": "^5.3.7",
+        "twig/twig": "^3.3.3"
+    },
+    "require-dev": {
+        "chiron/devtools": "^1.0",
+        "spatie/phpunit-snapshot-assertions": "^4.2"
+    },
+    "suggest": {
+        "ext-pcntl": "Provides the ability to quit and resume the starter kit wizard on POSIX systems"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Chiron\\Dev\\LibraryStarterKit\\": "src/LibraryStarterKit/",
+            "Vendor\\SubNamespace\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Chiron\\Test\\Dev\\LibraryStarterKit\\": "tests/LibraryStarterKit/",
+            "Vendor\\Test\\SubNamespace\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true,
+            "captainhook/plugin-composer": true,
+            "chiron/devtools": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "captainhook": {
+            "force-install": true
+        },
+        "ramsey/conventional-commits": {
+            "configFile": "conventional-commits.json"
+        },
+        "chiron/devtools": {
+            "command-prefix": "dev"
+        }
+    },
+    "scripts": {
+        "post-root-package-install": "git init",
+        "post-create-project-cmd": "Chiron\\Dev\\LibraryStarterKit\\Wizard::start",
+        "starter-kit": "Chiron\\Dev\\LibraryStarterKit\\Wizard::start"
+    },
+    "scripts-descriptions": {
+        "starter-kit": "Runs the PHP Library Starter Kit wizard."
+    }
+}
