@@ -1,6 +1,13 @@
 # GitHub Actions Documentation: https://docs.github.com/en/actions
-
 name: "build"
+
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#permissions
+# https://github.com/github/codeql-action/issues/572
+permissions:
+  actions: read
+  contents: read
+  pull-requests: read
+  security-events: write
 
 on:
   push:
@@ -92,7 +99,7 @@ jobs:
         run: "./vendor/bin/psalm --taint-analysis --report=build/logs/psalm.sarif"
 
       - name: "Upload security analysis results to GitHub"
-        uses: "github/codeql-action/upload-sarif@v1"
+        uses: "github/codeql-action/upload-sarif@v2"
         with:
           sarif_file: "build/logs/psalm.sarif"
 
@@ -130,13 +137,12 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          - "7.4"
           - "8.0"
           - "8.1"
         operating-system:
-          - "macos-latest"
           - "ubuntu-latest"
           - "windows-latest"
+          - "macos-latest"
         dependencies:
           - "lowest"
           - "highest"
